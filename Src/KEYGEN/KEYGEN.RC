@@ -1,0 +1,267 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)\r\n"
+    "#ifdef _WIN32\r\n"
+    "LANGUAGE 9, 1\r\n"
+    "#pragma code_page(1252)\r\n"
+    "#endif\r\n"
+    "#include ""res\\KeyGen.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""afxres.rc""         // Standard components\r\n"
+    "#endif\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON    DISCARDABLE     "res\\KeyGen.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_DIALOG_PASSWORD DIALOG DISCARDABLE  10, 30, 191, 42
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Application Password"
+FONT 8, "MS Sans Serif"
+BEGIN
+    LTEXT           "Please enter application password:",IDC_STATIC,6,6,116,
+                    8
+    EDITTEXT        IDC_EDIT_PASSWORD,6,16,75,12,ES_PASSWORD | 
+                    ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,135,6,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,135,23,50,14
+END
+
+IDD_DIALOG_NEW_APP DIALOG DISCARDABLE  16, 32, 211, 143
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Add Application"
+FONT 8, "MS Sans Serif"
+BEGIN
+    LTEXT           "Application &name:",IDC_STATIC,6,6,60,8
+    EDITTEXT        IDC_EDIT_NAME,6,16,140,12,ES_AUTOHSCROLL
+    LTEXT           "&Generation code (10 letters and numbers):",IDC_STATIC,
+                    6,34,142,8
+    EDITTEXT        IDC_EDIT_GENERATION,6,45,140,12,ES_UPPERCASE | 
+                    ES_AUTOHSCROLL
+    GROUPBOX        "Registration key type",IDC_STATIC,6,62,140,35,WS_GROUP
+    CONTROL         "&User inputted code",IDC_RADIO_USER,"Button",
+                    BS_AUTORADIOBUTTON,12,73,74,10
+    CONTROL         "&File based",IDC_RADIO_FILE,"Button",BS_AUTORADIOBUTTON,
+                    12,84,45,10
+    GROUPBOX        "Key generation password",IDC_STATIC,6,105,140,32,
+                    WS_GROUP
+    CONTROL         "&Password required:",IDC_CHECK_PASSWORD,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,12,118,76,10
+    EDITTEXT        IDC_EDIT_PASSWORD,93,118,48,12,ES_PASSWORD | 
+                    ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,155,6,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,155,23,50,14
+END
+
+IDD_DIALOG_KEYINFO DIALOG DISCARDABLE  0, 0, 187, 88
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "New Registration Key"
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "&Yes",IDOK,18,68,30,14
+    PUSHBUTTON      "&No",IDCANCEL,56,68,30,14
+    PUSHBUTTON      "&Copy To Clipboard",IDC_BUTTON_COPY,94,68,75,14
+    ICON            111,IDC_INFO_ICON,8,21,20,20
+    LTEXT           "Registration key is:",IDC_STATIC,34,8,64,8
+    LTEXT           "",IDC_REGKEY,49,24,130,8
+    LTEXT           "Do you wish to generate another key for this",
+                    IDC_STATIC,34,39,144,8
+    CONTROL         "application?",IDC_STATIC,"Static",SS_LEFTNOWORDWRAP | 
+                    WS_GROUP,34,47,41,8
+END
+
+IDD_DIALOG_GENERATE DIALOG DISCARDABLE  16, 32, 211, 150
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Generate Registration Key"
+FONT 8, "MS Sans Serif"
+BEGIN
+    GROUPBOX        "Generate key for",IDC_STATIC,6,6,140,24
+    LTEXT           "",IDC_STATIC_NAME,12,17,131,8
+    LTEXT           "Registration &string (e.g. user name):",IDC_STATIC,6,36,
+                    121,8
+    EDITTEXT        IDC_EDIT_STRING,6,46,140,12,ES_AUTOHSCROLL
+    LTEXT           "&Random seed (any 10 letters and numbers):",IDC_STATIC,
+                    6,64,143,8
+    EDITTEXT        IDC_EDIT_SEED,6,74,80,12,ES_UPPERCASE | ES_AUTOHSCROLL
+    LTEXT           "Generation &password:",IDC_STATIC_PASSWORD,6,92,72,8,
+                    WS_DISABLED
+    EDITTEXT        IDC_EDIT_PASSWORD,6,102,80,12,ES_PASSWORD | 
+                    ES_AUTOHSCROLL | WS_DISABLED
+    LTEXT           "Key &filename:",IDC_STATIC_FILENAME,6,121,47,8,
+                    WS_DISABLED
+    EDITTEXT        IDC_EDIT_FILENAME,6,131,140,12,ES_UPPERCASE | 
+                    ES_AUTOHSCROLL | WS_DISABLED
+    DEFPUSHBUTTON   "OK",IDOK,155,6,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,155,23,50,14
+END
+
+IDD_KEYGEN_DIALOG DIALOG DISCARDABLE  16, 20, 250, 139
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Registration Key Generator"
+FONT 8, "MS Sans Serif"
+BEGIN
+    LTEXT           "Generate key &for application:",IDC_STATIC,6,6,99,8
+    LISTBOX         ID_LIST_APPS,6,16,153,117,LBS_SORT | 
+                    LBS_NOINTEGRALHEIGHT | LBS_DISABLENOSCROLL | WS_VSCROLL | 
+                    WS_TABSTOP
+    DEFPUSHBUTTON   "&Generate Key...",ID_BUTTON_GENERATE,169,6,75,14
+    PUSHBUTTON      "Application &Info...",ID_BUTTON_INFO,169,28,75,14
+    PUSHBUTTON      "&Add Application...",ID_BUTTON_ADD,169,46,75,14
+    PUSHBUTTON      "&Delete Application",ID_BUTTON_DELETE,169,63,75,14
+    PUSHBUTTON      "&Close",IDOK,169,85,75,14
+END
+
+IDD_DIALOG_APPINFO DIALOG DISCARDABLE  16, 32, 211, 174
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Edit Application Information"
+FONT 8, "MS Sans Serif"
+BEGIN
+    LTEXT           "Application &name:",IDC_STATIC,6,6,60,8
+    EDITTEXT        IDC_EDIT_NAME,6,16,140,12,ES_AUTOHSCROLL
+    GROUPBOX        "Registration key type",IDC_STATIC,6,34,140,35,WS_GROUP
+    CONTROL         "&User inputted code",IDC_RADIO_USER,"Button",
+                    BS_AUTORADIOBUTTON,12,45,74,10
+    CONTROL         "&File based",IDC_RADIO_FILE,"Button",BS_AUTORADIOBUTTON,
+                    12,56,45,10
+    GROUPBOX        "Key generation password",IDC_STATIC,6,76,140,32,
+                    WS_GROUP
+    CONTROL         "&Password required:",IDC_CHECK_PASSWORD,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,12,89,76,10
+    EDITTEXT        IDC_EDIT_PASSWORD,93,89,48,12,ES_PASSWORD | 
+                    ES_AUTOHSCROLL
+    LTEXT           "Secret &generation code:",IDC_STATIC,6,114,82,8
+    EDITTEXT        IDC_EDIT_GENERATION,6,124,140,12,ES_UPPERCASE | 
+                    ES_AUTOHSCROLL
+    GROUPBOX        "Validation code",IDC_STATIC,6,142,140,24
+    LTEXT           "",IDC_VALIDATION_CODE,12,153,125,8
+    DEFPUSHBUTTON   "OK",IDOK,155,6,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,155,23,50,14
+END
+
+
+#ifndef _MAC
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904B0"
+        BEGIN
+            VALUE "CompanyName", "\0"
+            VALUE "FileDescription", "KeyGen MFC Application\0"
+            VALUE "FileVersion", "1, 0, 0, 1\0"
+            VALUE "InternalName", "KeyGen\0"
+            VALUE "LegalCopyright", "Copyright (C) 1998\0"
+            VALUE "LegalTrademarks", "\0"
+            VALUE "OriginalFilename", "KeyGen.EXE\0"
+            VALUE "ProductName", "KeyGen Application\0"
+            VALUE "ProductVersion", "1, 0, 0, 1\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+#endif    // !_MAC
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE 9, 1
+#pragma code_page(1252)
+#endif
+#include "res\KeyGen.rc2"  // non-Microsoft Visual C++ edited resources
+#include "afxres.rc"         // Standard components
+#endif
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

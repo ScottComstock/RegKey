@@ -1,0 +1,9 @@
+LIBRARY RK32
+DESCRIPTION "RegKey 3.2"
+VERSION 3.2
+EXPORTS
+   RegKeyNewCodeSet=_RegKeyNewCodeSet@8
+   RegKeyGenerate=_RegKeyGenerate@16
+   RegKeyValidate=_RegKeyValidate@24
+   RegKeyFileGenerate=_RegKeyFileGenerate@16
+   RegKeyFileValidate=_RegKeyFileValidate@28
