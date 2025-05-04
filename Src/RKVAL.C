@@ -69,6 +69,38 @@
 /* nYourKey            INPUT: Your key (if registered)                       */
 /* peRegistered        OUTPUT: Is key valid                                  */
 
+/* FIXME: tweak this so it can build under both DOS and Windows
+RKFUNCDEF RKRETURN RKCALL RegKeyValidate(
+*/
+#ifdef NOT_C_TARGET
+#ifdef VB_TARGET
+RKFUNCDEF RKRETURN pascal far __export rkv(
+   const char *szRegString,
+   const char *szRegKey,
+   const char *szValidationCode,
+   const char *szYourName,
+   unsigned long int nYourKey,
+   RKVALID *peRegistered)
+#else
+#ifdef PASCAL_TARGET
+RKFUNCDEF RKRETURN rkv(
+   const char *szRegString,
+   const char *szRegKey,
+   const char *szValidationCode,
+   const char *szYourName,
+   unsigned long int nYourKey,
+   RKVALID *peRegistered)
+#else
+RKFUNCDEF RKRETURN rkv(
+   const char *szRegString,
+   const char *szRegKey,
+   const char *szValidationCode,
+   const char *szYourName,
+   unsigned long int nYourKey,
+   RKVALID *peRegistered)
+#endif
+#endif
+#else
 RKFUNCDEF RKRETURN RKCALL RegKeyValidate(
    CONST char *szRegString,
    CONST char *szRegKey,
@@ -76,6 +108,7 @@ RKFUNCDEF RKRETURN RKCALL RegKeyValidate(
    CONST char *szYourName,
    unsigned long int nYourKey,
    RKVALID *peRegistered)
+#endif
 {
    BIGINT bStringHash;
    BIGINT bR;
@@ -141,3 +174,35 @@ RKFUNCDEF RKRETURN RKCALL RegKeyValidate(
    /* Return with success */
    return(RK_SUCCESS);
 }
+/*#ifdef NOT_C_TARGET
+#ifdef VB_TARGET*/
+//RKFUNCDEF RKRETURN rkv(
+//   const char *szRegString,
+//   const char *szRegKey,
+//   const char *szValidationCode,
+//   const char *szYourName,
+//   unsigned long int nYourKey,
+//   RKVALID *peRegistered)
+/*#else
+#ifdef PASCAL_TARGET
+RKFUNCDEF RKRETURN rkv(
+   const char *szRegString,
+   const char *szRegKey,
+   const char *szValidationCode,
+   const char *szYourName,
+   unsigned long int nYourKey,
+   RKVALID *peRegistered)
+#else
+RKFUNCDEF RKRETURN rkv(
+   const char *szRegString,
+   const char *szRegKey,
+   const char *szValidationCode,
+   const char *szYourName,
+   unsigned long int nYourKey,
+   RKVALID *peRegistered)
+#endif*/
+//{
+//	RKRETURN ret = RegKeyValidate(szRegString,szRegKey,szValidationCode,szYourName,nYourKey,peRegistered);
+//	return ret;
+//}
+/*#endif*/

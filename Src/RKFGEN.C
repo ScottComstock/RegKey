@@ -69,11 +69,35 @@
 /* szRandomSeed        INPUT: Random number seed                             */
 /* szFileName          INPUT: Registration key file name                     */
 
+#ifdef NOT_C_TARGET
+#ifdef VB_TARGET
+RKFUNCDEF RKRETURN pascal far __export rkfg(
+   const char *szRegString,
+   const char *szGenerationCode,
+   const char *szRandomSeed,
+   const char *szFileName)
+#else
+#ifdef PASCAL_TARGET
+RKFUNCDEF RKRETURN rkfg(
+   const char *szRegString,
+   const char *szGenerationCode,
+   const char *szRandomSeed,
+   const char *szFileName)
+#else
+RKFUNCDEF RKRETURN rkfg(
+   const char *szRegString,
+   const char *szGenerationCode,
+   const char *szRandomSeed,
+   const char *szFileName)
+#endif
+#endif
+#else
 RKFUNCDEF RKRETURN RKCALL RegKeyFileGenerate(
    CONST char *szRegString,
    CONST char *szGenerationCode,
    CONST char *szRandomSeed,
    CONST char *szFileName)
+#endif
 {
    char szFilenameBuffer[13];
    char szRegKey[21];

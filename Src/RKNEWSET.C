@@ -49,9 +49,27 @@
 /* szGenerationCode    INPUT: Ten digit generation code                      */
 /* szValidateCode      OUTPUT: Ten digit validation code                     */
 
+#ifdef NOT_C_TARGET
+#ifdef VB_TARGET
+RKFUNCDEF RKRETURN pascal far __export rkncs(
+   const char *szGenerationCode,
+   char *szValidationCode)
+#else
+#ifdef PASCAL_TARGET
+RKFUNCDEF RKRETURN rkncs(
+   const char *szGenerationCode,
+   char *szValidationCode)
+#else
+RKFUNCDEF RKRETURN rkncs(
+   const char *szGenerationCode,
+   char *szValidationCode)
+#endif
+#endif
+#else
 RKFUNCDEF RKRETURN RKCALL RegKeyNewCodeSet(
    CONST char *szGenerationCode,
-   char *szValidationCode)
+   char *szValidationCode)	
+#endif
 {
    BIGINT bGenCode;
    BIGINT bValCode;
@@ -101,3 +119,23 @@ RKFUNCDEF RKRETURN RKCALL RegKeyNewCodeSet(
    /* Return with success */
    return(RK_SUCCESS);
 }
+
+/*#ifdef NOT_C_TARGET*/
+/*	#ifdef VB_TARGET*/
+//		RKFUNCDEF RKRETURN rkncs(
+//  	 const char *szGenerationCode,
+//   	 char *szValidationCode)
+/*	#else 
+	#ifdef PASCAL_TARGET
+		RKFUNCDEF RKRETURN rkncs(
+			const char *szGenerationCode,
+			char *szValidationCode)
+	#else
+		RKFUNCDEF RKRETURN rkncs(
+   		const char *szGenerationCode,
+   		char *szValidationCode)
+	#endif*/
+//{
+//	return RegKeyNewCodeSet(szGenerationCode, szValidationCode);
+//}
+/*#endif*/

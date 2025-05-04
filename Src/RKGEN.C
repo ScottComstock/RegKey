@@ -69,11 +69,42 @@
 /* szRandomSeed        INPUT: Random number seed                             */
 /* szRegKey            OUTPUT: 20-digit registration key                     */
 
+/* FIXME: tweak this so it can build under both DOS and Windows
 RKFUNCDEF RKRETURN RKCALL RegKeyGenerate(
    CONST char *szRegString,
    CONST char *szGenerationCode,
    CONST char *szRandomSeed,
    char *szRegKey)
+*/
+#ifdef NOT_C_TARGET
+#ifdef VB_TARGET
+RKFUNCDEF RKRETURN pascal far __export rkg(
+   const char *szRegString,
+   const char *szGenerationCode,
+   const char *szRandomSeed,
+   char *szRegKey)
+#else
+#ifdef PASCAL_TARGET
+RKFUNCDEF RKRETURN rkg(
+   const char *szRegString,
+   const char *szGenerationCode,
+   const char *szRandomSeed,
+   char *szRegKey)
+#else
+RKFUNCDEF RKRETURN rkg(
+   const char *szRegString,
+   const char *szGenerationCode,
+   const char *szRandomSeed,
+   char *szRegKey)
+#endif
+#endif
+#else
+RKFUNCDEF RKRETURN RKCALL RegKeyGenerate(
+   CONST char *szRegString,
+   CONST char *szGenerationCode,
+   CONST char *szRandomSeed,
+   char *szRegKey)
+#endif
 {
    BIGINT bRandom;
    BIGINT bR;
@@ -151,3 +182,29 @@ RKFUNCDEF RKRETURN RKCALL RegKeyGenerate(
    /* Return with success */
    return(RK_SUCCESS);
 }
+ 
+/*#ifdef NOT_C_TARGET
+#ifdef VB_TARGET*/
+//RKFUNCDEF RKRETURN rkg(
+//   const char *szRegString,
+//   const char *szGenerationCode,
+//   const char *szRandomSeed,
+//   char *szRegKey)
+/*#else
+#ifdef PASCAL_TARGET
+RKFUNCDEF RKRETURN rkg(
+   const char *szRegString,
+   const char *szGenerationCode,
+   const char *szRandomSeed,
+   char *szRegKey)
+#else
+RKFUNCDEF RKRETURN rkg(
+   const char *szRegString,
+   const char *szGenerationCode,
+   const char *szRandomSeed,
+   char *szRegKey)           
+#endif*/
+//{
+//	return RegKeyGenerate(szRegString,szGenerationCode,szRandomSeed,szRegKey);
+//}   
+/*#endif*/
