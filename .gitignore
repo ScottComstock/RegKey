@@ -1,4 +1,4 @@
-.OBJ
-.BAK
-.LIB
-.QLB
+*.OBJ
+*.BAK
+*.LIB
+*.QLB
