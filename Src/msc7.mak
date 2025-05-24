@@ -36,3 +36,5 @@ clean:
     del *.obj
     del *.lib
     del *.qlb
+    del *.map
+    del *.lst
