@@ -1,15 +1,18 @@
 CC=cl
-CFLAGS=/c /AL /nologo /W3
-LFLAGS=/Q
-OBJS=rkgen.obj rkval.obj rknewset.obj rkfgen.obj rkfval.obj rkfile.obj rkmath.obj
-LFLAGSOLD=/Q /NOE /DOSSEG /PACKC /PACKD
-all: rkvb10.lib rkvb10.qlb
+BC=bc
+CFLAGS=/c /AL /nologo /W3 /DNOT_C_TARGET /DVBDOS_TARGET
+BFLAGS=/d /t /c:512
+LFLAGS=/Q /nod
+OBJS=rkgen.obj rkval.obj rknewset.obj rkfgen.obj rkfval.obj rkfile.obj rkmath.obj rkvb.obj
 
-rkvb10.lib: $(OBJS)
-    lib rkvb10.lib +rkfgen+rkfile+rkfval+rkgen+rkmath+rknewset+rkval,rkvb10.lst;
+all: regkeyvb.lib regkeyvb.qlb
 
-rkvb10.qlb: $(OBJS)
-    link $(LFLAGS) +rkfgen+rkfile+rkfval+rkgen+rkmath+rknewset+rkval,rkvb10.qlb,,n:\vbdos10\lib\vbdosqlb.lib;
+regkeyvb.lib: $(OBJS)
+    lib regkeyvb.lib +rkmath+rknewset+rkgen+rkval+rkfile+rkfgen+rkfval+rkvb,regkeyvb.lst;
+
+regkeyvb.qlb: $(OBJS)   
+# rem link $(LFLAGS) +rkfgen+rkfile+rkfval+rkgen+rkmath+rknewset+rkval,rkvb10.qlb,,n:\vbdos10\lib\vbdosqlb.lib;
+    link $(LFLAGS) regkeyvb.lib,regkeyvb.qlb,,n:\vbdos10\lib\vbdosqlb.lib;
     
 rkgen.obj: rkgen.c regkey.h rkintern.h
     $(CC) $(CFLAGS) rkgen.c
@@ -20,10 +23,10 @@ rkval.obj: rkval.c regkey.h rkintern.h
 rknewset.obj: rknewset.c regkey.h rkintern.h
     $(CC) $(CFLAGS) rknewset.c
 
-rkfgen.obj: rkfgen.c regkey.h rkintern.h
+rkfgen.obj: rkfgen.c rkgen.c regkey.h rkintern.h
     $(CC) $(CFLAGS) rkfgen.c
 
-rkfval.obj: rkfval.c regkey.h rkintern.h
+rkfval.obj: rkfval.c rkval.c regkey.h rkintern.h
     $(CC) $(CFLAGS) rkfval.c
 
 rkfile.obj: rkfile.c regkey.h rkintern.h
@@ -32,9 +35,13 @@ rkfile.obj: rkfile.c regkey.h rkintern.h
 rkmath.obj: rkmath.c regkey.h rkintern.h
     $(CC) $(CFLAGS) rkmath.c
 
+rkvb.obj: rkvb.bas
+    $(BC) $(BFLAGS) rkvb.bas rkvb.obj;
+
 clean:
     del *.obj
     del *.lib
     del *.qlb
     del *.map
     del *.lst
+    del *.bak

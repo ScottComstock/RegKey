@@ -69,6 +69,7 @@
 /* szRegString         OUTPUT: Registration string                           */
 /* peRegistered        OUTPUT: Is key valid                                  */
 
+#ifdef WIN32
 #ifdef NOT_C_TARGET
 #ifdef VB_TARGET
 RKFUNCDEF RKRETURN pascal far __export rkfv(
@@ -100,6 +101,20 @@ RKFUNCDEF RKRETURN rkfv(
    RKVALID *peRegistered)
 #endif
 #endif
+#endif
+#endif
+
+#ifdef MSDOS
+#ifdef NOT_C_TARGET
+#ifdef VBDOS_TARGET
+RKFUNCDEF RKRETURN RKCALL rkfv(
+        CONST char* szFileName,
+        CONST char* szValidationCode,
+        CONST char* szYourName,
+        unsigned long int nYourKey,
+        char* szRegString,
+        unsigned short int cbMaxStringSize,
+        RKVALID* peRegistered)
 #else
 RKFUNCDEF RKRETURN RKCALL RegKeyFileValidate(
    CONST char *szFileName,             /*  INPUT: Registration key file name */
@@ -110,13 +125,15 @@ RKFUNCDEF RKRETURN RKCALL RegKeyFileValidate(
    unsigned short int cbMaxStringSize, /*  INPUT: Size of reg. string        */
    RKVALID *peRegistered)
 #endif
+#endif
+#endif
 {
    RKRETURN toReturn;
    char szRegBuffer[INTERNAL_STRING_CHARS+1];
    char szRegKey[21];
    int cbSize;
    int cbCut;
-   BOOL *pbModInited;
+   //BOOL *pbModInited;
    char *cp;
 
    /* Validate Parameters */

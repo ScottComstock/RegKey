@@ -279,7 +279,7 @@ BIGINT *bModMinusOneGet(void);
 MODINFO *modMinusOneInfoGet(void);
 BIGINT *bRegKeyBaseGet(void);
 
-
+#ifdef WIN32
 #ifdef NOT_C_TARGET
 #ifdef VB_TARGET
 RKFUNCDEF RKRETURN pascal far __export rkncs(
@@ -369,6 +369,42 @@ RKFUNCDEF RKRETURN rkfv(
    char *szRegString,
    unsigned short int cbMaxStringSize,
    RKVALID *peRegistered);
+#endif
+#endif
+#endif
+#endif
+
+#ifdef MSDOS
+#ifdef NOT_C_TARGET
+#ifdef VBDOS_TARGET
+RKFUNCDEF RKRETURN RKCALL rkncs(
+   CONST char *szGenerationCode,       
+   char *szValidationCode);  
+RKFUNCDEF RKRETURN RKCALL rkg(
+   CONST char *szRegString,            
+   CONST char *szGenerationCode,       
+   CONST char *szRandomSeed,           
+   char *szRegKey);                    
+RKFUNCDEF RKRETURN RKCALL rkv(
+   CONST char *szRegString,            
+   CONST char *szRegKey,               
+   CONST char *szValidationCode,       
+   CONST char *szYourName,             
+   unsigned long int nYourKey,         
+   RKVALID *peRegistered);             
+RKFUNCDEF RKRETURN RKCALL rkfg(
+   CONST char *szRegString,            
+   CONST char *szGenerationCode,       
+   CONST char *szRandomSeed,           
+   CONST char *szFileName);            
+RKFUNCDEF RKRETURN RKCALL rkfv(
+   CONST char *szFileName,             
+   CONST char *szValidationCode,       
+   CONST char *szYourName,             
+   unsigned long int nYourKey,         
+   char *szRegString,                  
+   unsigned short int cbMaxStringSize, 
+   RKVALID *peRegistered);             
 #endif
 #endif
 #endif

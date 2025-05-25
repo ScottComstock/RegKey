@@ -49,6 +49,7 @@
 /* szGenerationCode    INPUT: Ten digit generation code                      */
 /* szValidateCode      OUTPUT: Ten digit validation code                     */
 
+#ifdef WIN32
 #ifdef NOT_C_TARGET
 #ifdef VB_TARGET
 RKFUNCDEF RKRETURN pascal far __export rkncs(
@@ -65,10 +66,21 @@ RKFUNCDEF RKRETURN rkncs(
    char *szValidationCode)
 #endif
 #endif
+#endif
+#endif
+
+#ifdef MSDOS
+#ifdef NOT_C_TARGET
+#ifdef VBDOS_TARGET
+RKFUNCDEF RKRETURN RKCALL rkncs(
+   CONST char *szGenerationCode,
+   char *szValidationCode)
 #else
 RKFUNCDEF RKRETURN RKCALL RegKeyNewCodeSet(
    CONST char *szGenerationCode,
-   char *szValidationCode)	
+   char *szValidationCode)
+#endif
+#endif
 #endif
 {
    BIGINT bGenCode;

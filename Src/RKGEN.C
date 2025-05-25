@@ -76,6 +76,9 @@ RKFUNCDEF RKRETURN RKCALL RegKeyGenerate(
    CONST char *szRandomSeed,
    char *szRegKey)
 */
+
+
+#ifdef WIN32
 #ifdef NOT_C_TARGET
 #ifdef VB_TARGET
 RKFUNCDEF RKRETURN pascal far __export rkg(
@@ -98,12 +101,25 @@ RKFUNCDEF RKRETURN rkg(
    char *szRegKey)
 #endif
 #endif
+#endif 
+#endif
+
+#ifdef MSDOS
+#ifdef NOT_C_TARGET
+#ifdef VBDOS_TARGET
+RKFUNCDEF RKRETURN RKCALL rkg(
+    CONST char* szRegString,
+    CONST char* szGenerationCode,
+    CONST char* szRandomSeed,
+    char* szRegKey)
 #else
 RKFUNCDEF RKRETURN RKCALL RegKeyGenerate(
    CONST char *szRegString,
    CONST char *szGenerationCode,
    CONST char *szRandomSeed,
    char *szRegKey)
+#endif
+#endif
 #endif
 {
    BIGINT bRandom;
