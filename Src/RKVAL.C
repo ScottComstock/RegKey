@@ -44,8 +44,6 @@
 #include "regkey.h"
 #include "rkintern.h"
 
-
-
 /* RegKeyValidate()                                                          */
 /*                                                                           */
 /* Checks whether a given registration string and registration key           */
@@ -69,6 +67,69 @@
 /* nYourKey            INPUT: Your key (if registered)                       */
 /* peRegistered        OUTPUT: Is key valid                                  */
 
+/* FIXME: tweak this so it can build under both DOS and Windows
+RKFUNCDEF RKRETURN RKCALL RegKeyValidate(
+*/
+#ifdef WIN32
+#ifdef NOT_C_TARGET
+#ifdef VB_TARGET
+RKFUNCDEF RKRETURN pascal far __export rkv(
+   const char *szRegString,
+   const char *szRegKey,
+   const char *szValidationCode,
+   const char *szYourName,
+   unsigned long int nYourKey,
+   RKVALID *peRegistered)
+#else
+#ifdef PASCAL_TARGET
+RKFUNCDEF RKRETURN rkv(
+   const char *szRegString,
+   const char *szRegKey,
+   const char *szValidationCode,
+   const char *szYourName,
+   unsigned long int nYourKey,
+   RKVALID *peRegistered)
+#else
+RKFUNCDEF RKRETURN rkv(
+   const char *szRegString,
+   const char *szRegKey,
+   const char *szValidationCode,
+   const char *szYourName,
+   unsigned long int nYourKey,
+   RKVALID *peRegistered)
+#endif
+#endif
+#else
+RKFUNCDEF RKRETURN RKCALL RegKeyValidate(
+    CONST char* szRegString,
+    CONST char* szRegKey,
+    CONST char* szValidationCode,
+    CONST char* szYourName,
+    unsigned long int nYourKey,
+    RKVALID* peRegistered)
+#endif 
+#endif
+
+#ifdef MSDOS
+#ifdef NOT_C_TARGET
+#ifdef VBDOS_TARGET
+RKFUNCDEF RKRETURN RKCALL rkv(
+        CONST char* szRegString,
+        CONST char* szRegKey,
+        CONST char* szValidationCode,
+        CONST char* szYourName,
+        unsigned long int nYourKey,
+        RKVALID* peRegistered)
+#else
+RKFUNCDEF RKRETURN RKCALL rkv(
+        CONST char* szRegString,
+        CONST char* szRegKey,
+        CONST char* szValidationCode,
+        CONST char* szYourName,
+        unsigned long int nYourKey,
+        RKVALID* peRegistered)
+#endif
+#else
 RKFUNCDEF RKRETURN RKCALL RegKeyValidate(
    CONST char *szRegString,
    CONST char *szRegKey,
@@ -76,6 +137,8 @@ RKFUNCDEF RKRETURN RKCALL RegKeyValidate(
    CONST char *szYourName,
    unsigned long int nYourKey,
    RKVALID *peRegistered)
+#endif
+#endif
 {
    BIGINT bStringHash;
    BIGINT bR;
@@ -84,7 +147,7 @@ RKFUNCDEF RKRETURN RKCALL RegKeyValidate(
    BIGINT bRight;
    BIGINT bTemp;
    BIGINT bValCode;
-   BOOL *pbModInited;
+   //BOOL *pbModInited;
    MODINFO *pRegKeyModInfo = regKeyModInfoGet();
 
    /* Validate Parameters */
@@ -141,3 +204,4 @@ RKFUNCDEF RKRETURN RKCALL RegKeyValidate(
    /* Return with success */
    return(RK_SUCCESS);
 }
+

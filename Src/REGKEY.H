@@ -32,8 +32,10 @@
 /* PLATFORM-DEPENDANT DEFINITIONS */
 /* ------------------------------ */
 
+/* FIXME: improve this in the future */
 #ifdef _WIN32
 #include <windows.h>
+//#define _CRT_SECURE_NO_WARNINGS 1
 #endif
 
 /* For DLL versions, definitions of function or data that is exported from */

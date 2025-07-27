@@ -85,8 +85,6 @@ MODINFO *modMinusOneInfoGet(void) {return(&modMinusOneInfo);}
 static BIGINT bRegKeyBase = {0x9783, 0xcf08, 0x10b5, 0x0000, 0x0000, 0x0000};
 BIGINT *bRegKeyBaseGet(void) {return(&bRegKeyBase);}
 
-
-
 /* Array containing characters used in RegKey's base-32 representation. Uses */
 /* all numeric characters, and all but four upper-case letters. The omitted  */
 /* letters are G, I, O and S, which can easily be confused for the numerals  */
@@ -191,8 +189,6 @@ void bToString(char *szOut, CONST BIGINT *pbIn)
       bShiftRight(&bWork, 5);
    }
 }
-
-
 
 /* stringToB()                                                               */
 /*                                                                           */
@@ -994,7 +990,7 @@ void bHash(BIGINT *pbHash, CONST char *szString,
    char bCount;
 
    /* Validate parameters if operating in test mode */
-   ASSERT(pbX != NULL);
+   ASSERT(pbHash != NULL);
    ASSERT(szString != NULL);
    ASSERT(pModInfo != NULL);
 

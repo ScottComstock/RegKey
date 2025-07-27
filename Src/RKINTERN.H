@@ -45,8 +45,12 @@
 /* #define RKASM to use inline 80x86 assembly */
 /* #undef RKASM to cause equivalent C code to be used in place of assembly */
 #ifndef _WIN32
+#ifdef _MSC_VER
 #define RKASM
 #endif
+#endif
+
+
                
 /* Inline assembly keyword */
 #ifdef _MSC_VER
@@ -55,6 +59,46 @@
 #define ASM             asm
 #endif
 
+
+
+/* 
+    Based partly on macros from ChatGPT prompted as:
+    "I need a C++ macro to provide a file-open macro that 
+    uses fopen_s() for all compilers where it's available, 
+    and fopen() if it isn't (or under MS-DOS)", followed with
+    "Can you create a similar macro for strcpy()?" on 5 July 2025
+*/
+#if defined(_MSC_VER) && _MSC_VER >= 1400
+#include <errno.h>
+#include <string.h>
+#define UNIFIED_FOPEN(fp, filename, mode)                                          \
+    do {                                                                             \
+      errno_t _err = fopen_s(&(fp), (filename), (mode));                             \
+      if (_err != 0) {                                                               \
+        (fp) = NULL;                                                                 \
+      }                                                                              \
+    } while (0)
+#define UNIFIED_STRCPY(dest, size, src)                                      \
+    do {                                                                       \
+      errno_t _err = strcpy_s((dest), (size), (src));                          \
+      if (_err != 0) {                                                         \
+        (dest)[0] = '\0';                                                      \
+      }                                                                        \
+    } while (0)
+#else 
+#define UNIFIED_FOPEN(fp, filename, mode)                                          \
+    do {                                                                             \
+      (fp) = fopen((filename), (mode));                                              \
+    } while (0)
+#define UNIFIED_STRCPY(dest, size, src)                                      \
+    do {                                                                       \
+      if (strlen(src) >= (size)) {                                             \
+        (dest)[0] = '\0';                                                      \
+      } else {                                                                 \
+        strcpy((dest), (src));                                                \
+      }                                                                        \
+    } while (0)
+#endif
 
 
 /* CONFIGURABLE PARAMETERS */
@@ -203,12 +247,26 @@ extern BOOL bModInited;
 
 #ifdef RKTEST
 #include <assert.h>
+#include <stdio.h>
 #define ASSERT(x) assert(x)
 #else
 #define ASSERT(x)
 #endif
 
+/* swiped from ChatGPT 2025-06-01 */
+#ifdef RKTEST
+  // Define the debug print macro
+  #define DPRINT(args)                                                    \
+    do {                                                                       \
+      printf(stderr, "[DEBUG] %s:%d: ", __FILE__, __LINE__);                \
+      printf(stderr, args);                                                   \
+      printf(stderr, "\n"); /* append newline */                              \
+    } while (0)
 
+#else
+  // Debugging disabled: macro does nothing
+  #define DPRINT(args) do { } while (0)
+#endif
 
 /* DOS DIRECTORY ENTRY DEFINITIONS */
 /* ------------------------------- */
@@ -279,7 +337,7 @@ BIGINT *bModMinusOneGet(void);
 MODINFO *modMinusOneInfoGet(void);
 BIGINT *bRegKeyBaseGet(void);
 
-
+#ifdef WIN32
 #ifdef NOT_C_TARGET
 #ifdef VB_TARGET
 RKFUNCDEF RKRETURN pascal far __export rkncs(
@@ -369,6 +427,42 @@ RKFUNCDEF RKRETURN rkfv(
    char *szRegString,
    unsigned short int cbMaxStringSize,
    RKVALID *peRegistered);
+#endif
+#endif
+#endif
+#endif
+
+#ifdef MSDOS
+#ifdef NOT_C_TARGET
+#ifdef VBDOS_TARGET
+RKFUNCDEF RKRETURN RKCALL rkncs(
+   CONST char *szGenerationCode,       
+   char *szValidationCode);  
+RKFUNCDEF RKRETURN RKCALL rkg(
+   CONST char *szRegString,            
+   CONST char *szGenerationCode,       
+   CONST char *szRandomSeed,           
+   char *szRegKey);                    
+RKFUNCDEF RKRETURN RKCALL rkv(
+   CONST char *szRegString,            
+   CONST char *szRegKey,               
+   CONST char *szValidationCode,       
+   CONST char *szYourName,             
+   unsigned long int nYourKey,         
+   RKVALID *peRegistered);             
+RKFUNCDEF RKRETURN RKCALL rkfg(
+   CONST char *szRegString,            
+   CONST char *szGenerationCode,       
+   CONST char *szRandomSeed,           
+   CONST char *szFileName);            
+RKFUNCDEF RKRETURN RKCALL rkfv(
+   CONST char *szFileName,             
+   CONST char *szValidationCode,       
+   CONST char *szYourName,             
+   unsigned long int nYourKey,         
+   char *szRegString,                  
+   unsigned short int cbMaxStringSize, 
+   RKVALID *peRegistered);             
 #endif
 #endif
 #endif

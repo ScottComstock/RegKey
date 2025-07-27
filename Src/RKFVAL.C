@@ -69,21 +69,89 @@
 /* szRegString         OUTPUT: Registration string                           */
 /* peRegistered        OUTPUT: Is key valid                                  */
 
-RKFUNCDEF RKRETURN RKCALL RegKeyFileValidate(
-   CONST char *szFileName,
-   CONST char *szValidationCode,
-   CONST char *szYourName,
+#ifdef WIN32
+#ifdef NOT_C_TARGET
+#ifdef VB_TARGET
+RKFUNCDEF RKRETURN pascal far __export rkfv(
+   const char *szFileName,
+   const char *szValidationCode,
+   const char *szYourName,
    unsigned long int nYourKey,
    char *szRegString,
    unsigned short int cbMaxStringSize,
    RKVALID *peRegistered)
+#else
+#ifdef PASCAL_TARGET
+RKFUNCDEF RKRETURN rkfv(
+   const char *szFileName,
+   const char *szValidationCode,
+   const char *szYourName,
+   unsigned long int nYourKey,
+   char *szRegString,
+   unsigned short int cbMaxStringSize,
+   RKVALID *peRegistered)
+#else
+RKFUNCDEF RKRETURN rkfv(
+   const char *szFileName,
+   const char *szValidationCode,
+   const char *szYourName,
+   unsigned long int nYourKey,
+   char *szRegString,
+   unsigned short int cbMaxStringSize,
+   RKVALID *peRegistered)
+#endif
+#endif
+#else
+RKFUNCDEF RKRETURN RKCALL RegKeyFileValidate(
+    CONST char* szFileName,             /*  INPUT: Registration key file name */
+    CONST char* szValidationCode,       /*  INPUT: App's validation code      */
+    CONST char* szYourName,             /*  INPUT: Your name (if registered)  */
+    unsigned long int nYourKey,         /*  INPUT: Your key (if registered)   */
+    char* szRegString,                  /* OUTPUT: Registration string        */
+    unsigned short int cbMaxStringSize, /*  INPUT: Size of reg. string        */
+    RKVALID* peRegistered)
+#endif
+#endif
+
+#ifdef MSDOS
+#ifdef NOT_C_TARGET
+#ifdef VBDOS_TARGET
+RKFUNCDEF RKRETURN RKCALL rkfv(
+        CONST char* szFileName,
+        CONST char* szValidationCode,
+        CONST char* szYourName,
+        unsigned long int nYourKey,
+        char* szRegString,
+        unsigned short int cbMaxStringSize,
+        RKVALID* peRegistered)
+#else
+RKFUNCDEF RKRETURN RKCALL rkfv(
+        CONST char* szFileName,
+        CONST char* szValidationCode,
+        CONST char* szYourName,
+        unsigned long int nYourKey,
+        char* szRegString,
+        unsigned short int cbMaxStringSize,
+        RKVALID* peRegistered)
+#endif
+#else
+RKFUNCDEF RKRETURN RKCALL RegKeyFileValidate(
+   CONST char *szFileName,             /*  INPUT: Registration key file name */
+   CONST char *szValidationCode,       /*  INPUT: App's validation code      */
+   CONST char *szYourName,             /*  INPUT: Your name (if registered)  */
+   unsigned long int nYourKey,         /*  INPUT: Your key (if registered)   */
+   char *szRegString,                  /* OUTPUT: Registration string        */
+   unsigned short int cbMaxStringSize, /*  INPUT: Size of reg. string        */
+   RKVALID *peRegistered)
+#endif
+#endif
 {
    RKRETURN toReturn;
    char szRegBuffer[INTERNAL_STRING_CHARS+1];
    char szRegKey[21];
    int cbSize;
    int cbCut;
-   BOOL *pbModInited;
+   //BOOL *pbModInited;
    char *cp;
 
    /* Validate Parameters */

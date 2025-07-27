@@ -198,7 +198,9 @@ return_success:
       FILE *fp;
 
       /* Open file */
-      if((fp=fopen(szActualFilename,"r")) == NULL)
+      /* if ((fp = fopen(szActualFilename, "r")) == NULL) */
+      UNIFIED_FOPEN(fp, szActualFilename, "r");
+      if (fp==NULL)
       {
          return(FALSE);
       }
@@ -319,7 +321,10 @@ return_success:
       FILE *fp;
 
       /* Open file */
-      if((fp=fopen(szFilename,"w")) == NULL)
+      /*if((fp=fopen(szFilename,"w")) == NULL)*/
+      UNIFIED_FOPEN(fp, szFilename, "w");
+
+      if(fp==NULL)
       {
          return(FALSE);
       }
@@ -357,12 +362,13 @@ return_success:
 /* szFilename  Name of file to read, wildcards optional                      */
 /* pContents   Pointer to buffer where file contents should be stored        */
 /* cbSize      An int containing the number of bytes to be written to file   */
-
+/*                                                                           */
+/* note: using the win32 ANSI functions/structures for now (sfc 5jul25)      */
 int fileFindFirst(CONST char *szPath, DIRENTRY *pDirEntry, int iAttrib)
 {
 #ifdef _WIN32
-   WIN32_FIND_DATA Win32FindData;
-   HANDLE hFileFind = FindFirstFile(szPath, &Win32FindData);
+   WIN32_FIND_DATAA Win32FindData;
+   HANDLE hFileFind = FindFirstFileA(szPath, &Win32FindData);
 
    if(hFileFind == NULL)
    {
@@ -371,11 +377,13 @@ int fileFindFirst(CONST char *szPath, DIRENTRY *pDirEntry, int iAttrib)
 
    if(strlen(Win32FindData.cAlternateFileName) > 0)
    {
-      strcpy(pDirEntry->name, Win32FindData.cAlternateFileName);
+      /*strcpy(pDirEntry->name, Win32FindData.cAlternateFileName);*/
+       UNIFIED_STRCPY(pDirEntry->name, sizeof(pDirEntry->name), Win32FindData.cAlternateFileName);
    }
    else
    {
-      strcpy(pDirEntry->name, Win32FindData.cFileName);
+      /*strcpy(pDirEntry->name, Win32FindData.cFileName);*/
+       UNIFIED_STRCPY(pDirEntry->name, sizeof(pDirEntry->name), Win32FindData.cFileName);
    }
 
    FindClose(hFileFind);  
